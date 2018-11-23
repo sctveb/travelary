@@ -11,11 +11,12 @@
 				</p>
 			</div>
 			<div class="welcome-hero-serch-box">
+				<!--<form action="index.html">-->
 				<div class="welcome-hero-form">
 					<div class="single-welcome-hero-form">
 						<h3>what?</h3>
 						<form action="index.html">
-							<input type="text" placeholder="Ex:  cafe" />
+							<input id="name" type="text" placeholder="Ex:  cafe" />
 						</form>
 						<div class="welcome-hero-form-icon">
 							<i class="flaticon-list-with-dots"></i>
@@ -24,7 +25,7 @@
 					<div class="single-welcome-hero-form">
 						<h3>location</h3>
 						<form action="index.html">
-							<input type="text" placeholder="Ex:  seoul" />
+							<input id="location" type="text" placeholder="Ex:  seoul" />
 						</form>
 						<div class="welcome-hero-form-icon">
 							<i class="flaticon-gps-fixed-indicator"></i>
@@ -32,10 +33,12 @@
 					</div>
 				</div>
 				<div class="welcome-hero-serch">
-					<button class="welcome-hero-btn" onclick="window.location.href='#'">
-						 search  <i data-feather="search"></i> 
+					<button class="welcome-hero-btn" onclick="FindData()">
+					<!--<input type="submit" class="welcome-hero-btn" value='search'> -->
+						 Search  <i data-feather="search"></i> 
 					</button>
 				</div>
+				<!--</form>-->
 			</div>
 		</div>
 
@@ -494,5 +497,14 @@
 	</section><!--/.explore-->
 	<!--explore end -->
 		
-
+	<script type="text/javascript">
+		function FindData() {
+     
+        var PostData1 = document.getElementById('name').value;
+        var PostData2 = document.getElementById('location').value;
+		
+		window.location.href ="data?name=" + PostData1 ;
+		    }
+		
+	</script>
 {%endblock%}
