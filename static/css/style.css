@@ -464,6 +464,9 @@ nav.navbar.bootsnav .navbar-toggle i{color: #ff545a;}
     height: 100%;
     background: rgba(162,172,177,.2);
 }
+
+.explore-img{border:none;width:358px; height:268.5px;}
+
 .single-explore-img-info {
     position: absolute;
     bottom:-20px;
