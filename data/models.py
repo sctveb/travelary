@@ -1,4 +1,6 @@
 from django.db import models
+from django.conf import settings
+
 
 # Create your models here.Create
 class Data(models.Model):
@@ -19,3 +21,10 @@ class Data(models.Model):
     x = models.FloatField()
     y = models.FloatField()
     imageSrc = models.CharField(max_length=200)
+    
+class review(models.Model):
+    data = models.ForeignKey(Data, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
+    content = models.TextField()
+    image = models.ImageField()
+    

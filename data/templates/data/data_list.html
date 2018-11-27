@@ -9,7 +9,7 @@
 		<div class="single-welcome-hero-form">
 			<h3>what?</h3>
 			<form action="index.html">
-				<input id="name" type="text" value=???>
+				<input id="name" type="text" value='{{request.GET.name}}'  onkeyup="enterkey()">
 			</form>
 			<div class="welcome-hero-form-icon">
 				<i class="flaticon-list-with-dots"></i>
@@ -18,7 +18,7 @@
 		<div class="single-welcome-hero-form">
 			<h3>location</h3>
 			<form action="index.html">
-				<input id="location" type="text" placeholder="Ex:  seoul" />
+				<input id="location" type="text" value='{{request.GET.location}}' placeholder="Ex:  seoul"  onkeyup="enterkey()"/>
 			</form>
 			<div class="welcome-hero-form-icon">
 				<i class="flaticon-gps-fixed-indicator"></i>
@@ -94,10 +94,10 @@
 												</a>
 											</div>
 										</div>
-										<div class="col-sm-10">
-											<p>
-												{{data.desc}}
-											</p>
+										<div class="col-sm-10" style="height:100px">
+											<p>{{data.desc}}</p>
+											<p>{{data.tags}}</p>
+											<p>{{data.options}}</p>
 										</div>
 									</div>
 								</div>
@@ -124,8 +124,20 @@
     var PostData1 = document.getElementById('name').value;
     var PostData2 = document.getElementById('location').value;
 	
-	window.location.href ="?name=" + PostData1 ;
+	window.location.href ="?name=" + PostData1 + "&location=" + PostData2;
 	    }
+
+	function enterkey() {
+		if (window.event.keyCode == 13) {
+
+		var PostData1 = document.getElementById('name').value;
+        var PostData2 = document.getElementById('location').value;
+		
+		window.location.href ="?name=" + PostData1 + "&location=" + PostData2;
+		}
+}
+
+
 	
 </script>
 
