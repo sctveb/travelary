@@ -1,5 +1,6 @@
 {%extends 'base.html'%}
 {% load bootstrap3 %}
+{% load socialaccount %}
 
 {%block body%}
     <div class="container">
@@ -9,4 +10,8 @@
             <input type="submit">
         </form>
     </div>
+{% providers_media_js %}
+    <a style="background-color:#3b5998" class="btn btn-primary" href="{% provider_login_url "facebook" method="js_sdk" %}">
+    <i class="fab fa-facebook-square"></i>
+    Facebook Connect</a>
 {%endblock%}

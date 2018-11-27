@@ -1,7 +1,9 @@
 {%extends 'base.html'%}
 {%block body%}
 {%load staticfiles%}
-<!--welcome-hero start -->
+
+		
+		<!--welcome-hero start -->
 	<section id="home" class="welcome-hero">
 		<div class="container">
 			<div class="welcome-hero-txt">
@@ -35,16 +37,19 @@
 				<div class="welcome-hero-serch">
 					<button class="welcome-hero-btn" onclick="FindData()">
 					<!--<input type="submit" class="welcome-hero-btn" value='search'> -->
-						 Search  <i data-feather="search"></i> 
-					</button>
+						 search  <i data-feather="search"></i> 
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+						<circle cx="11" cy="11" r="8"></circle>
+						<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+						</svg>
+						</button>
 				</div>
 				<!--</form>-->
 			</div>
-		</div>
+		
 
 	</section><!--/.welcome-hero-->
-	<!--welcome-hero end -->
-	
+	<!--welcome-hero end -->	
 	
 	<!--list-topics start -->
 	<section id="list-topics" class="list-topics">
@@ -56,7 +61,7 @@
 							<div class="single-list-topics-icon">
 								<img src="{%static '/images/pic/restaurant.png'%}" width="80">
 							</div>
-							<h2><a href="#">restaurant</a></h2>
+							<h2><a href="{%url 'data:list'%}?menu=1">restaurant</a></h2>
 							<p>150 listings</p>
 						</div>
 					</li>
@@ -65,7 +70,7 @@
 							<div class="single-list-topics-icon">
 								<img src="{%static '/images/pic/cafe.png'%}" width="80">
 							</div>
-							<h2><a href="#">cafe</a></h2>
+							<h2><a href="{%url 'data:list'%}?menu=2">cafe</a></h2>
 							<p>214 listings</p>
 						</div>
 					</li>
@@ -74,7 +79,7 @@
 							<div class="single-list-topics-icon">
 								<img src="{%static '/images/pic/hotel.png'%}" width="80">
 							</div>
-							<h2><a href="#">hotels</a></h2>
+							<h2><a href="{%url 'data:list'%}?menu=19">hotels</a></h2>
 							<p>185 listings</p>
 						</div>
 					</li>
