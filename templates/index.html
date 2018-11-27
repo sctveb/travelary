@@ -18,7 +18,7 @@
 					<div class="single-welcome-hero-form">
 						<h3>what?</h3>
 						<form action="index.html">
-							<input id="name" type="text" placeholder="Ex:  cafe" />
+							<input id="name" type="text" placeholder="Ex:  cafe" onkeyup="enterkey()"/>
 						</form>
 						<div class="welcome-hero-form-icon">
 							<i class="flaticon-list-with-dots"></i>
@@ -27,7 +27,7 @@
 					<div class="single-welcome-hero-form">
 						<h3>location</h3>
 						<form action="index.html">
-							<input id="location" type="text" placeholder="Ex:  seoul" />
+							<input id="location" type="text" placeholder="Ex:  seoul" onkeyup="enterkey()"/>
 						</form>
 						<div class="welcome-hero-form-icon">
 							<i class="flaticon-gps-fixed-indicator"></i>
@@ -43,6 +43,7 @@
 						<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
 						</svg>
 						</button>
+
 				</div>
 				<!--</form>-->
 			</div>
@@ -508,8 +509,22 @@
         var PostData1 = document.getElementById('name').value;
         var PostData2 = document.getElementById('location').value;
 		
-		window.location.href ="data?name=" + PostData1 ;
+		window.location.href ="data?name=" + PostData1 + "&location=" + PostData2;
 		    }
 		
+		function enterkey() {
+		if (window.event.keyCode == 13) {
+
+		var PostData1 = document.getElementById('name').value;
+        var PostData2 = document.getElementById('location').value;
+		
+		window.location.href ="data?name=" + PostData1 + "&location=" + PostData2;
+		}
+}
+
+
+	
 	</script>
+	
+	
 {%endblock%}
