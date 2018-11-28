@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import ListView
-from .models import Data
+from django.views.generic import ListView, CreateView, DetailView
+from .models import Data, Review
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Q
 
@@ -49,7 +49,24 @@ class DataList(ListView):
         context['list_exams'] = file_exams
         return context
         
-        
+class DataDetail(DetailView):
+    model = Data
+
+
+    
+    
+class ReviewCreate(CreateView):
+    model = Review
+    fields = ['image', 'content', 'data', ]
+    
+    
+    
+    
+    
+    
+    
+    
+    
     # def list(request):
     # # 전체 목록을 보여주는 코드
     # questions_list = Question.objects.all()

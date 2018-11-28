@@ -6,6 +6,7 @@ from django.conf import settings
 class Data(models.Model):
     
     menu = models.CharField(max_length=100)
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100) 
     businessCategory = models.CharField(max_length=100)
     category = models.CharField(max_length=100)
@@ -22,7 +23,7 @@ class Data(models.Model):
     y = models.FloatField()
     imageSrc = models.CharField(max_length=200)
     
-class review(models.Model):
+class Review(models.Model):
     data = models.ForeignKey(Data, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     content = models.TextField()
