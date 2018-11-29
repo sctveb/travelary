@@ -1,0 +1,39 @@
+{%extends 'base.html'%}
+{%block body%}
+
+<div id="map" style="width:500px;height:400px;"></div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f4a5b52540678c118171013204825f57"></script>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = { 
+        center: new daum.maps.LatLng({{review.data.y}}, {{data.x}}), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+// 마커가 표시될 위치입니다 
+var markerPosition  = new daum.maps.LatLng({{data.y}}, {{data.x}}); 
+
+// 마커를 생성합니다
+var marker = new daum.maps.Marker({
+    position: markerPosition
+});
+
+// 마커가 지도 위에 표시되도록 설정합니다
+marker.setMap(map);
+
+// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+// marker.setMap(null);    
+</script>
+
+
+<!--지도--><!--검색페이지사진, 상세정보-->
+<!--리뷰작성-->
+
+<!--사용자 리뷰들 클릭-(모달)사진(여러장)|리뷰-->
+
+
+{%endblock%}
+
