@@ -26,20 +26,28 @@ class Data(models.Model):
     imageSrc = models.CharField(max_length=200)
 
 def post_image_path(instance, filename):
-    return 'posts/{}/{}'.format(instance.pk, filename)
+    return 'reviews/{}/{}'.format(instance.review.pk, filename)
     
 class Review(models.Model):
     data = models.ForeignKey(Data, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     content = models.TextField()
+    rate = models.FloatField()
+    
+    def get_absolute_url(self):
+        return reverse('data:detail', kwargs={'pk': self.data_id})
+    
+
+class Image(models.Model):
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
     image = ProcessedImageField(
                             upload_to=post_image_path,
+                            blank = True,
+                            null = True,
                             processors=[ResizeToFill(716,537)],
                             format="JPEG",
                             options={'quality':90},
                                     )
-                                    
-    def get_absolute_url(self):
-        return reverse('data:detail', kwargs={'pk': self.data_id})
+    
        
     
