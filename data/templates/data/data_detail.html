@@ -1,9 +1,12 @@
 {%extends 'base.html'%}
 {%block body%}
+{%load staticfiles%}
 
+
+<!--지도O--><!--검색페이지사진, 상세정보-->
 
 <style>
-#container {overflow:hidden;height:600px;position:relative;}
+#container {overflow:hidden;height:100%;position:relative;}
 #btnRoadview,  #btnMap {position:absolute;top:5px;left:5px;padding:7px 12px;font-size:14px;border: 1px solid #dbdbdb;background-color: #fff;border-radius: 2px;box-shadow: 0 1px 1px rgba(0,0,0,.04);z-index:1;cursor:pointer;}
 #btnRoadview:hover,  #btnMap:hover{background-color: #fcfcfc;border: 1px solid #c1c1c1;}
 #container.view_map #mapWrapper {z-index: 10;}
@@ -12,19 +15,126 @@
 #container.view_roadview #btnRoadview {display: none;}
 </style>
 
-
+<div style="margin-left:20px" >
 <div id="container" class="view_map">
-    <div id="mapWrapper" style="width:800px;height:600px;position:relative;">
-        <div id="map" style="width:100%;height:600px"></div> <!-- 지도를 표시할 div 입니다 -->
-        <input type="button" id="btnRoadview" onclick="toggleMap(false)" title="로드뷰 보기" value="로드뷰">
-    </div>
-    <div id="rvWrapper" style="width:800px;height:600px;position:absolute;top:0;left:0;">
-        <div id="roadview" style="height:100%"></div> <!-- 로드뷰를 표시할 div 입니다 -->
-        <input type="button" id="btnMap" onclick="toggleMap(true)" title="지도 보기" value="지도">
+        <div id="mapWrapper" style="width:780px;height:600px;position:relative;">
+            <div id="map" style="width:100%;height:100%"></div> <!-- 지도를 표시할 div 입니다 -->
+            <input type="button" id="btnRoadview" onclick="toggleMap(false)" title="로드뷰 보기" value="로드뷰">
+        </div>
+        <div id="rvWrapper" style="width:780px;height:600px;position:absolute;top:0;left:0;">
+            <div id="roadview" style="height:100%"></div> <!-- 로드뷰를 표시할 div 입니다 -->
+            <input type="button" id="btnMap" onclick="toggleMap(true)" title="지도 보기" value="지도">
+        </div>
     </div>
 </div>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f4a5b52540678c118171013204825f57"></script>
+{% if user.is_authenticated %}
+
+
+<!--리뷰작성-->
+<a href="{% url 'data:reviewcreate' data_id=data.id user_id=user.id %}">리뷰작성</a>
+
+
+
+
+{% endif %}
+
+
+
+
+<section id="explore" class="explore">
+	<div class="container">
+		<div class="section-header">
+	    </div>
+	    <div class="explore-content">
+			<div class="row">
+			    <div class=" col-md-4 col-sm-6">
+					<div class="single-explore-item">
+						<div class="single-explore-img">
+							{% if data.imageSrc %}
+								<img src="{{data.imageSrc}}" alt="explore image" class="explore-img">
+							{% else %}
+								<img src="https://previews.123rf.com/images/aquir/aquir1405/aquir140500246/28667314-binnenkort-rood-round-grungy-stempel-ge%C3%AFsoleerd-op-een-witte-achtergrond.jpg" alt="explore image" class="explore-img">
+							{% endif %}
+							<div class="single-explore-img-info">
+								<button onclick="window.location.href='#'">best rated</button>
+								<div class="single-explore-image-icon-box">
+									<ul>
+										<li>
+											<div class="single-explore-image-icon">
+												<i class="fa fa-arrows-alt"></i>
+											</div>
+										</li>
+										<li>
+											<div class="single-explore-image-icon">
+												<i class="fa fa-bookmark-o"></i>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="single-explore-txt bg-theme-1">
+							<h2><a href="{% url 'data:detail' data.id %}">{{data.name}}</a></h2>
+							<p class="explore-rating-price">
+								<span class="explore-rating">5.0</span>
+								<a href="#"> 10 ratings</a> 
+								<span class="explore-price-box">
+									form
+									<span class="explore-price">{{data.commonAddr}}</span>
+								</span>
+							<div class="explore-person">
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="explore-person-img">
+											<a href="#">
+												<img src="{% static '/images/explore/person.png' %}" alt="explore person">
+											</a>
+										</div>
+									</div>
+									<div class="col-sm-10" style="height:100px">
+										<p>{{data.desc}}</p>
+										<p>{{data.tags}}</p>
+										<p>{{data.options}}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--사용자 리뷰들 클릭-(모달)사진(여러장)|리뷰보기-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4a206359c7aca2dd23eaa8cc71f37fee"></script>
 <script>
 var container = document.getElementById('container'), // 지도와 로드뷰를 감싸고 있는 div 입니다
     mapWrapper = document.getElementById('mapWrapper'), // 지도를 감싸고 있는 div 입니다
@@ -111,10 +221,7 @@ function toggleMap(active) {
 
 
 
-<!--지도--><!--검색페이지사진, 상세정보-->
-<!--리뷰작성-->
 
-<!--사용자 리뷰들 클릭-(모달)사진(여러장)|리뷰-->
 
 
 

@@ -3,6 +3,8 @@ from django.views.generic import ListView, CreateView, DetailView
 from .models import Data, Review
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # Create your views here.\
 
@@ -52,19 +54,25 @@ class DataList(ListView):
 class DataDetail(DetailView):
     model = Data
 
-
-    
-    
-class ReviewCreate(CreateView):
+class ReviewCreate(LoginRequiredMixin, CreateView):
     model = Review
-    fields = ['image', 'content', 'data', ]
+    fields = ['image', 'content', ]
     
-    
-    
-    
-    
-    
-    
+    def form_valid(self, form):
+        
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        data = Data.objects.get(id = self.kwargs.get('data_id'))
+        self.object.data = data
+        print("*********************")
+        print(data)
+        print("///////////////////////")
+        # data id
+        # image
+        # star rating
+        
+        self.object.save()
+        return super().form_valid(form)
     
     
     # def list(request):
