@@ -1,0 +1,391 @@
+{% extends 'base.html' %}
+{%block body%}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!--좌측 화면-->
+{% if user.is_authenticated%}
+<!------ Include the above in your HEAD tag ---------->
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 ">
+            <div class="panel panel-default">
+                <div class="box box-info">
+                    <div class="box-body">
+                        {% if user_profile.image_profile %}
+                        <div align="center"> <img alt="User Pic" src="{{user_profile.image_profile.url}}" id="profile-image1"
+                                class="img-circle img-responsive">
+                            {% else %}
+                            <div align="center"> <img alt="User Pic" src="#" id="profile-image1" class="img-circle img-responsive">
+                                {% endif %}
+                            </div>
+                            <div align="center">
+                                <h4 style="color:#00b1b1;">{{user.username}} </h4></span>
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr style="margin:5px 0 5px 0;">
+                            <div align="center">
+
+
+                                <div id="list-example" class="list-group">
+                                    <a class="list-group-item list-group-item-action" href="#list-item-1">사용자정보</a>
+                                    <a class="list-group-item list-group-item-action" href="#list-item-2">작성한 일정</a>
+                                    <a class="list-group-item list-group-item-action" href="#list-item-3">업로드한 사진</a>
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-9 ">
+                <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
+                    {% if user.user_profile%}
+                    <!--우측 화면-->
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>사용자 정보</h4>
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="box box-info">
+
+                                <div class="box-body">
+                                    <div class="col-sm-6">
+                                        {% if user_profile.image_profile %}
+                                        <div align="center"> <img alt="User Pic" src="{{user_profile.image_profile.url}}"
+                                                id="profile-image1" class="img-circle img-responsive">
+                                            {% else %}
+                                            <div align="center"> <img alt="User Pic" src="#" id="profile-image1" class="img-circle img-responsive">
+                                                {% endif %}
+
+
+                                                <!--<input id="profile-image-upload" class="hidden" type="file">-->
+                                                <!--<div style="color:#999;" >click here to change profile image</div>-->
+                                                <!--Upload Image Js And Css-->
+
+
+
+
+
+
+
+                                            </div>
+
+                                            <br>
+
+                                            <!-- /input-group -->
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <h4 style="color:#00b1b1;">{{user.username}} </h4></span>
+                                            <span>
+                                                <p>추가 정보 입력 완료</p>
+                                            </span>
+                                            <p>
+                                                <a class="btn btn-primary" href="{% url 'user_profile:update' user_profile.pk %}"
+                                                    role="button">수정</a>
+                                                <a class="btn btn-primary" href="{% url 'user_profile:delete' user_profile.pk %}"
+                                                    role="button">삭제</a></p>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <hr style="margin:5px 0 5px 0;">
+
+                                        <div class="col-sm-5 col-xs-6 tital ">나이:</div>
+                                        <div class="col-sm-7 col-xs-6 ">{{user_profile.age}}</div>
+                                        <div class="clearfix"></div>
+                                        <div class="bot-border"></div>
+
+                                        <div class="col-sm-5 col-xs-6 tital ">성별:</div>
+                                        <div class="col-sm-7"> {{user_profile.gender}}</div>
+                                        <div class="clearfix"></div>
+                                        <div class="bot-border"></div>
+
+                                        <div class="col-sm-5 col-xs-6 tital ">나이 출생년도로 변경?:</div>
+                                        <div class="col-sm-7"> 흠터레스팅</div>
+                                        <div class="clearfix"></div>
+                                        <div class="bot-border"></div>
+                                        
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 id="list-item-2">작성한 일정</h4>
+                                            </div>
+                                            <div class="panel-body">
+                                            <div class="box-body">
+                                                <p>"약 한 거 아니야?"
+
+
+                                                    어느 스포츠 선수가 특별한 경기를 했다. 그런 날에는 쉽게 볼 수 있는 기사 댓글이다. 그냥 농담 삼아 던지는 경우가
+                                                    대부분이나, 진지함이 묻어있는 경우도 있다. 약물은 스포츠 선수의 경기력 향상에 밀접한 상관관계를 가지고 있다고 널리
+                                                    알려져 있어서 그렇다. 스포츠를 좋아하지 않는 대중도 알 만큼.
+
+
+                                                    e스포츠에서도 비슷한 댓글에서 본 적이 있다. 그러나 전통 스포츠와 분위기가 조금 다르다. 그저 우스갯소리로만 약이라는
+                                                    단어를 던진다. 약물이라고 하면 근육을 쉽게 불리는 작용만을 생각해서 그런 것 같다. 신체의 강함과 e스포츠의 경기력
+                                                    사이에는 딱히 관련이 없으니 말이다. e스포츠 선수가 약물의 도움을 받아 경기력을 향상할 수 있을 거라고 진지하게
+                                                    생각하는 일반인을 아직까진 만나보지 못했다.
+
+
+                                                    스타크래프트로 시작한 e스포츠는 어느덧 스무 살 청년이 됐다. 짧은 역사라고 볼 수 없다. 규모도 상상할 수 없을 정도로
+                                                    커졌다. 과거에는 e스포츠 선수가 연봉 1억이 넘으면 대서특필이 됐지만, 이제 억 단위를 받는 선수는 손가락으로 세기도
+                                                    민망해졌다. 심지어 우리나라 최고의 인기 스포츠인 야구 선수와 비교해도 크게 뒤처지지 않는 연봉을 받는다.
+
+
+                                                    이 정도가 됐으면 갖출만한 구색은 갖춰져야 한다. 도핑 검사가 구색 중 하나다. e스포츠도 전통 스포츠와 마찬가지로
+                                                    공정한 경쟁이 뿌리가 되어야만 올바르게 설 수 있다. 도핑이 e스포츠 경기력 향상에 확실한 영향이 있다면, 규제는 반드시
+                                                    시행돼야 하는 사안이다. 경기력에 따라 선수들이 받을 수 있는 돈의 규모가 작게는 몇억, 크게는 몇십억도 왔다 갔다 하는
+                                                    상황이 됐다. 프로게이머가 언제까지 도핑의 유혹에서 자유로울 수 있을까.
+
+
+                                                    도핑은 e스포츠 선수의 경기력 향상에 영향을 미치나?
+
+
+                                                    600_사진.jpg
+
+
+                                                    도핑이 e스포츠 선수의 경기력 향상에도 영향을 주는가를 먼저 따져봐야 한다. '무슨 영향이 있겠어'라는 일반적인 생각이
+                                                    맞을까 틀릴까. 궁금증을 갖고 경희대학교 재활의학과 이종하 교수를 만났다. 이종하 교수는 9년간 KBO(한국프로야구)
+                                                    반도핑위원장이었고, 현재는 한국도핑방지위원회와 KBO에서 자문위원으로 활동하고 있다. 이 교수는 질문에 고민 없이 바로
+                                                    답을 내렸다.
+
+
+                                                    "당연히 문제가 된다"
+
+
+                                                    대답은 너무나 명료했다. 이 교수는 "경기력은 종합적이지 않나. 빨리 달리고, 높이 뛰고, 무거운 것을 들게 해주는
+                                                    것만을 경기력이라고 판단할 수 없다. 집중력, 피로감 등 경기력에 영향을 미치는 사항은 다양하다"고 설명하며, "현재
+                                                    금지된 약물 대부분이 e스포츠에 영향을 주는 것으로 추정된다"고 단언했다.
+
+
+                                                    대중들에게는 약물이 신체 강도를 높이기 위해 사용되는 것으로 알려져 있으나, 실제로 꼭 그렇진 않다는 거다. 오히려
+                                                    약물은 선수의 피로도를 줄여주고, 집중력을 향상하는 데 중점이 돼 있었다. 특히, 집중력과 피로도에 밀접한 상관이 있는
+                                                    흥분제 계통의 금지 약물은 e스포츠에 결정적인 영향을 미칠 수 있다고 이 교수는 이야기했다.
+
+
+                                                    해외에서는 이미 e스포츠 선수가 흥분제를 사용해 문제가 된 사례가 있었다. 2015년 카운터 스트라이크 글로벌 오펜시브
+                                                    프로게이머인 코리 프리슨(셈피스)이 "대회에 나올 때 팀 동료들과 '애더럴'을 복용한다"고 밝혀 파장을 일으켰다.
+                                                    최근에도 사건이 있었다. 오버워치 리그 선수인 '타이무'가 개인 방송에서 리그 내 20명 이상이 애더럴을 복용했다고
+                                                    폭로했다. 사실 여부가 드러나진 않았으나 논란이 됐다.
+
+
+                                                    이 교수는 애더럴이라는 단어를 듣자 익숙하다는 듯 설명을 이어갔다. "외국 용병들이 많이 사용했던 약물이다. 굉장히
+                                                    유명하다. 집중력을 향상해주고, 불안감을 억제해준다"며 "e스포츠에 직접적인 영향을 줄 만한 약물"이라고 콕 짚었다.
+
+
+                                                    원하면 구할 수 있는 걸까?
+
+
+                                                    만약에 약물 사용하고자 마음을 먹은 선수가 있다면, 그 선수는 쉽게 약물을 구할 수 있는 걸까? 이 교수의 대답은
+                                                    이번에도 간단했다. </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 id="list-item-3">업로드한 사진</h4>
+                                            </div>
+                                            <div class="panel-body">
+                                            <div class="box-body">
+                                                <p>"구하려면 구할 수 있다"
+
+
+                                                    주변에 의료계와 관련된 지인이 있다면, 금지 약물을 획득하는 건 그리 어렵지 않은 일이다. 또한 온라인을 통해 조금만
+                                                    어두운 경로를 밟는다면 충분히 구할 수 있다. 그 외에도 수많은 방법이 있다. 의지만 있다면 누구라도 가능한 일이다.
+
+
+                                                    27619821048_8001716ea3_z.jpg
+
+
+                                                    획득이 어렵지 않다는 것만이 문제가 아니다. 모르고 도핑을 할 수 있다는 위험성도 문제다. 한약은 물론 흔하게 접할 수
+                                                    있는 양약이나 보충제에도 금지 약물 성분이 들어가 있을 수 있다. 또한, 한국인들이 간혹 먹는 보약인 뱀탕이나 개소주도
+                                                    안전하지 않다. 생약 성분이 들어있는 모든 약은 피해야 한다. 생약은 천연으로 산출되는 자연물을 그대로 또는 간단한
+                                                    가공처리를 하여 만든 의약품이나 의약품 원료를 뜻한다.
+
+
+                                                    실수로 약물을 복용할 수 있기 때문에, 스포츠 선수들은 작은 것 하나를 섭취해도 성분을 모두 따져본다. 이 교수는
+                                                    "KBO 선수들이 모르고 약물을 사용하는 일은 이제 없다고 보는 것이 맞다. 그러나 특별한 자문 기관이 없고, 도핑
+                                                    검사를 하지 않는 e스포츠라면 선수들이 쉽게 노출될 수 있다"고 염려했다.
+
+
+                                                    금지 약물은 스포츠의 공정성만 해치는 게 아니다
+
+
+                                                    금지 약물이 스포츠계에서 해악으로 여겨지는 이유는 스포츠의 공정성 위배만이 아니다. 금지 약물은 중독성이 있다. 약
+                                                    자체에 습관성과 중독성이 있고, 약을 먹고 성적이 오르면 계속 찾을 수밖에 없다. 약을 끊었을 시 성적이 떨어진다는
+                                                    불안감이 커지기 때문이다. 이 교수는 "실수든 고의든, 한 번 약에서 힘을 얻으면 다시 찾을 확률이 굉장히 높다"고
+                                                    지적했다.
+
+
+                                                    금지 약물 중독은 위험하다. 금지 약물을 장기간 지속적으로 복용하게 되면 인체에 심각한 악영향을 초래한다. 약물 종류에
+                                                    따라 부작용이 다양한데, 문제가 심각한 이유는 대부분 종착지가 생명이라는 거다. 금지 약물 부작용은 생명의 지장을 초래할
+                                                    정도로 큰 위험을 불러온다. 특히, 심장 마비를 일으킬 가능성이 크다.
+
+
+                                                    26620092737_13dd468d01_z.jpg
+
+
+                                                    경각심이 필요한 때
+
+
+                                                    e스포츠 선수들은 약물에 쉽게 노출될 수 있고, 그에 따른 심각한 부작용에도 무방비다. 그러나 한국은 물론 해외에서도
+                                                    도핑에 대한 경각심이 크지 않는 것처럼 보인다. 라이엇 관계자는 "국내뿐 아니라 해외에서도 도핑 방지 및 검사와 관련된
+                                                    제도를 준비하지 못했다. 아직까진 앞으로도 계획이 없다"고 답했다. 라이엇만의 문제가 아니다. 블리자드도 마찬가지였고,
+                                                    e스포츠 관계자 모두 도핑에 대해서는 별생각이 없었다.
+
+
+                                                    오직 국제e스포츠연맹이 주관하는 대회, 아시안게임, ESL 같은 중소 규모의 국제 대회에서만 도핑을 규제하고 있다.
+                                                    e스포츠 대회의 핵심인 게임사에서 주관하는 리그는 어떤 안전장치도 없다. '타이무'가 쉽게 선수들의 애더럴 복용 사실을
+                                                    폭로할 수 있었던 이유도 여기에 있다.
+
+
+                                                    경각심을 가져야 할 때다. 우리나라 e스포츠 선수들을 의심하는 것은 아니다. 다만, 앞서 말했듯이 실수로 도핑을 할 수
+                                                    있고, 혹시나 도핑에 빠져 헤어나오지 못하면 건강에 심각한 문제를 안을 수도 있다. 최악으로는 e스포츠가 20년간 쌓아온
+                                                    공든 탑이 무너질 수도 있다. 그 위험성에 e스포츠를 지켜야 하고 e스포츠 선수를 구해야 한다. 그러나 지금 e스포츠는
+                                                    도핑을 막을 그물망이 전혀 없다.
+
+
+                                                    i13560394486.jpg
+
+
+                                                    먼저 정기적으로 도핑 방지 교육을 해야 한다. 한국 e스포츠 협회는 시즌이 시작되기 전 선수들을 위해 매번 소양 교육을
+                                                    실시한다. 교육 시간 중에는 앙꼬 없는 찐빵처럼 실효성이 없는 수업도 있다. 그러기보다는 알맹이가 있는 도핑 방지 수업을
+                                                    하는 게 어떨지 고려해야 한다. 앞으로는 도핑 방지와 검사가 필수가 돼야겠지만, 일단은 도핑에 대해 배우는 것만으로도
+                                                    응급 처치가 될 수 있다.
+
+
+                                                    한국도핑방지위원회는 공식 사이트를 통해 금지 약물과 성분을 검색할 수 있게 돕고 있다. 한약이나 양약을 정기적으로
+                                                    복용하고 있는 선수가 있다면, 혹시나 금지 약물 성분이 들어있지 않은 지 도움을 받길 바란다. 고육책이지만, 한순간에
+                                                    '약쟁이'라는 오명으로 뒤집어쓰고 명예를 실추하지 않도록 스스로 점검할 필요가 있다. 당장 대회에서 도핑과 관련한 명확한
+                                                    규칙이나 규제가 없다고 해도, 도핑은 공정한 경쟁이라는 대명제를 위반하는 일이다.
+
+
+                                                    이제부터 하나씩 실질적인 규칙과 제도를 만들고 정비해야 한다. 한국에는 한국도핑방지위원회라는 도핑을 방지하고 검사하는
+                                                    기구가 있다. KBO는 자체적으로 도핑방지기구를 운영하다가 2016년부터 한국도핑방지위원회에 업무를 이관한 바 있다.
+                                                    e스포츠 또한 한국도핑방지위원회에 도움을 받을 수 있을 것이다.
+
+
+                                                    소 잃고 외양간을 고친다는 속담이 있다. 그런데, 도핑을 별거 아닌 것으로 치부하면 소를 잃는 것으로 끝나지 않는다.
+                                                    초가삼간을 다 태워버리게 될지도 모른다. 이제는 도핑 방지를 향한 첫걸음을 떼야 한다.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                        <!-- /.box-body -->
+                                    </div>
+                                    <!-- /.box -->
+
+                                </div>
+
+
+
+                                {% else %}
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4>사용자 정보</h4>
+                                    </div>
+                                    <div class="panel-body">
+
+                                        <div class="box box-info">
+
+                                            <div class="box-body">
+                                                <div class="col-sm-6">
+                                                    {% if user_profile.image_profile %}
+                                                    <div align="center"> <img alt="User Pic" src="{{user_profile.image_profile.url}}"
+                                                            id="profile-image1" class="img-circle img-responsive">
+                                                        {% else %}
+                                                        <div align="center"> <img alt="User Pic" src="#" id="profile-image1"
+                                                                class="img-circle img-responsive">
+                                                            {% endif %}
+
+
+                                                            <!--<input id="profile-image-upload" class="hidden" type="file">-->
+                                                            <!--<div style="color:#999;" >click here to change profile image</div>-->
+                                                            <!--Upload Image Js And Css-->
+
+
+
+
+
+
+
+                                                        </div>
+
+                                                        <br>
+
+                                                        <!-- /input-group -->
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <h4 style="color:#00b1b1;">{{user.username}} </h4></span>
+                                                        <span>
+                                                            <p>추가 정보를 입력해주세요</p>
+                                                        </span>
+                                                        <p><a class="btn btn-primary" href="{% url 'user_profile:create' %}"
+                                                                role="button">입력</a></p>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <hr style="margin:5px 0 5px 0;">
+
+                                                    <div class="col-sm-5 col-xs-6 tital ">나이:</div>
+                                                    <div class="col-sm-7 col-xs-6 ">{{user_profile.age}}</div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="bot-border"></div>
+
+                                                    <div class="col-sm-5 col-xs-6 tital ">성별:</div>
+                                                    <div class="col-sm-7"> {{user_profile.gender}}</div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="bot-border"></div>
+
+                                                    <div class="col-sm-5 col-xs-6 tital ">나이 출생년도로 변경?:</div>
+                                                    <div class="col-sm-7"> 흠터레스팅</div>
+                                                    <div class="clearfix"></div>
+                                                    <div class="bot-border"></div>
+
+
+
+
+
+                                                    <!-- /.box-body -->
+                                                </div>
+                                                <!-- /.box -->
+
+                                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            <!--    <script>-->
+                                            <!--              $(function() {-->
+                                            <!--    $('#profile-image1').on('click', function() {-->
+                                            <!--        $('#profile-image-upload').click();-->
+                                            <!--    });-->
+                                            <!--});       -->
+                                            <!--              </script> -->
+                                            {% endif %}
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                {% endif %}
+
+
+
+                                {%endblock%}
