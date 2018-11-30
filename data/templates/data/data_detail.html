@@ -70,8 +70,8 @@
 					<div class="row">
 						<div class="col-sm-2">
 							<div class="explore-person-img">
-								<a href="#">
-									<img src="{% static '/images/explore/person.png' %}" alt="explore person">
+								<!--<a href="#">-->
+								<!--	<img src="{% static '/images/explore/person.png' %}" alt="explore person">-->
 								</a>
 							</div>
 						</div>
@@ -79,6 +79,8 @@
 							<p>{{data.desc}}</p>
 							<p>{{data.tags}}</p>
 							<p>{{data.options}}</p>
+							<p>{{data.commonAddr}} {{data.addr}}</p>
+							<p>{{data.phone}}</p>
 						</div>
 					</div>
 				</div>
@@ -195,77 +197,53 @@
 									    <div class="modal-content">
 									      <div class="modal-header">
 									        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+									      <!--  <h4 class="modal-title" id="myModalLabel">Modal title</h4>-->
 									      </div>
 									      <div class="modal-body">
-									        
-									    
-									    <!--    <div id="carousel_{{review.id}}" class="carousel slide" data-ride="carousel">-->
-									        <!-- Wrapper for slides -->
-											  <!--<div class="carousel-inner">-->
-											  <!--  <div class="item active">-->
-											  <!--   <img class="img-responsive" src="http://placehold.it/1200x600/555/000&text=One" alt="...">-->
-											  <!--    <div class="carousel-caption">-->
-											  <!--      One Image-->
-											  <!--    </div>-->
-											  <!--  </div>-->
-											  <!--  <div class="item">-->
-											  <!--    <img class="img-responsive" src="http://placehold.it/1200x600/fffccc/000&text=Two" alt="...">-->
-											  <!--    <div class="carousel-caption">-->
-											  <!--      Another Image-->
-											  <!--    </div>-->
-											  <!--  </div>-->
-											  <!--   <div class="item">-->
-											  <!--    <img class="img-responsive" src="http://placehold.it/1200x600/fcf00c/000&text=Three" alt="...">-->
-											  <!--    <div class="carousel-caption">-->
-											  <!--      Another Image-->
-											  <!--    </div>-->
-											  <!--  </div>-->
-											  <!--</div>-->
-											
+									  		
+										    <div id="carousel_{{review.id}}" class="carousel slide" data-ride="carousel" data-interval="false">
+											  <!-- Indicators -->
+											  <ol class="carousel-indicators">
+											  {% for i in review.image_set.all %}
+											      {% if forloop.counter0 == 0 %}
+											      <li data-target="#carousel_{{review.id}}" data-slide-to="{{ forloop.counter0 }}" class="active"></li>
+												  {% else %}
+												  <li data-target="#carousel_{{review.id}}" data-slide-to="{{ forloop.counter0 }}"></li>
+												  {% endif %}
+											  {% endfor %}
+											  </ol>
+
+											  <!-- Wrapper for slides -->
+											  <div class="carousel-inner" role="listbox">
+											  	{% for image in review.image_set.all %}
+											  		{% if forloop.counter == 1 %}
+										  				<div class="item active">
+								  					{% else %}
+  										  				<div class="item">
+								  					{% endif %}
+											  		<img src="{{image.image.url}}">
+											 	</div>
+											  	{% endfor %}
+											  </div>
 											  <!-- Controls -->
-											  <!--<a class="left carousel-control" href="#carousel_{{review.id}}" role="button" data-slide="prev">-->
-											  <!--  <span class="glyphicon glyphicon-chevron-left"></span>-->
-											  <!--</a>-->
-											  <!--<a class="right carousel-control" href="#carousel_{{review.id}}" role="button" data-slide="next">-->
-											  <!--  <span class="glyphicon glyphicon-chevron-right"></span>-->
-											  <!--</a>-->
-									    <!--    </div>-->
-									  
-											    <div id="carousel_{{review.id}}" class="carousel slide" data-ride="carousel">
-												  <!-- Indicators -->
-												  <ol class="carousel-indicators"></ol>
-												  <!-- Wrapper for slides -->
-												  <div class="carousel-inner">
-												  	{% for image in review.image_set.all %}
-												  		{% if forloop.counter == 1 %}
-											  				<div class="item active">
-									  					{% else %}
-  											  				<div class="item">
-									  					{% endif %}
-												  		<img src="{{image.image.url}}">
-												 	</div>
-												  	{% endfor %}
-												  </div>
-												  <!-- Controls -->
-												  <a class="left carousel-control" href="#carousel_{{review.id}}" data-slide="prev">
-												    <span class="glyphicon glyphicon-chevron-left"></span>
-												  </a>
-												  <a class="right carousel-control" href="#carousel_{{review.id}}" data-slide="next">
-												    <span class="glyphicon glyphicon-chevron-right"></span>
-												  </a>
-												</div>
+											  <a class="left carousel-control" href="#carousel_{{review.id}}" data-slide="prev">
+											    <span class="glyphicon glyphicon-chevron-left"></span>
+											  </a>
+											  <a class="right carousel-control" href="#carousel_{{review.id}}" data-slide="next">
+											    <span class="glyphicon glyphicon-chevron-right"></span>
+											  </a>
 											</div>
-									        {{review.content}}
-									      </div>
-									      <div class="modal-footer">
-									        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-									        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-									      </div>
-									    </div><!-- /.modal-content -->
-									  </div><!-- /.modal-dialog -->
-									</div><!-- /.modal -->
-								</div>
+										</div>
+								        {{review.content}}
+								      </div>
+								      <div class="modal-footer">
+								        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+								        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+								      </div>
+								    </div><!-- /.modal-content -->
+								  </div><!-- /.modal-dialog -->
+								</div><!-- /.modal -->
+							</div>
 {%endfor%}
 			</div>
 		</div>
@@ -315,7 +293,7 @@ map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
 var roadview = new daum.maps.Roadview(rvContainer);
 
 // 로드뷰의 위치를 특정 장소를 포함하는 파노라마 ID로 설정합니다
-// 로드뷰의 파노라마 ID는 Wizard를 사용하면 쉽게 얻을수 있습니다 
+// 로드뷰의 파노라마 ID는 Wizard를 사���하면 쉽게 얻을수 있습니다 
 // 특정 위치의 좌표와 가까운 로드뷰의 panoId를 추출하여 로드뷰를 띄운다.
 var roadviewClient = new daum.maps.RoadviewClient(); //좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper객체
 roadviewClient.getNearestPanoId(placePosition, 50, function(panoId) {
@@ -374,16 +352,16 @@ function toggleMap(active) {
 // });
 
 
-$(document).ready(function (){  
-  for(var i=0 ; i< m.length ; i++) {
-    $('<div class="item"><img src="'+m[i]+'"><div class="carousel-caption"></div>   </div>').appendTo('.carousel-inner');
-    $('<li data-target="#carousel-example-generic" data-slide-to="'+i+'"></li>').appendTo('.carousel-indicators')
+// $(document).ready(function (){  
+//   for(var i=0 ; i< m.length ; i++) {
+//     $('<div class="item"><img src="'+m[i]+'"><div class="carousel-caption"></div>   </div>').appendTo('.carousel-inner');
+//     $('<li data-target="#carousel-example-generic" data-slide-to="'+i+'"></li>').appendTo('.carousel-indicators')
 
-  }
-  $('.item').first().addClass('active');
-  $('.carousel-indicators > li').first().addClass('active');
-  $('#carousel_{{review.id}}').carousel("pause");
-});
+//   }
+//   $('.item').first().addClass('active');
+//   $('.carousel-indicators > li').first().addClass('active');
+//   $('#carousel_{{review.id}}').carousel("pause");
+// });
 
 
 
