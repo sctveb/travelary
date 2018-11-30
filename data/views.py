@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, DetailView
-from .models import Data, Review
+from .models import Data, Review, Image
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from .forms import ReviewForm, ImageForm, ImageFormSet
+from django.db import transaction
 
 # Create your views here.\
 
@@ -56,22 +57,26 @@ class DataDetail(DetailView):
 
 class ReviewCreate(LoginRequiredMixin, CreateView):
     model = Review
-    fields = ['image', 'content', ]
+    form_class = ReviewForm
+    # fields = ['image', 'content', 'rate']
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['image_formset'] = ImageFormSet()
+        return context
     
     def form_valid(self, form):
+        image_formset = ImageFormSet(self.request.POST, self.request.FILES)
         
-        self.object = form.save(commit=False)
-        self.object.user = self.request.user
-        data = Data.objects.get(id = self.kwargs.get('data_id'))
-        self.object.data = data
-        print("*********************")
-        print(data)
-        print("///////////////////////")
-        # data id
-        # image
-        # star rating
+        with transaction.atomic():
+            form.instance.user = self.request.user
+            form.instance.data_id = self.kwargs.get('data_id')
+            self.object = form.save()
         
-        self.object.save()
+            if image_formset.is_valid():
+                image_formset.instance = self.object
+                image_formset.save()
+
         return super().form_valid(form)
     
     

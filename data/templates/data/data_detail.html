@@ -15,17 +15,79 @@
 #container.view_roadview #btnRoadview {display: none;}
 </style>
 
-<div style="margin-left:20px" >
-<div id="container" class="view_map">
-        <div id="mapWrapper" style="width:780px;height:600px;position:relative;">
+
+<div class="container">
+	
+<div class="row">
+	<div id="container" class="view_map col-md-8 col-sm-12" style="height:500px;padding-right:0px;padding-left:0px;">
+        <!--<div id="mapWrapper" style="width:780px;height:600px;position:relative;">-->
+        <div id="mapWrapper" style="width:100%;height:100%;position:relative;">
             <div id="map" style="width:100%;height:100%"></div> <!-- 지도를 표시할 div 입니다 -->
             <input type="button" id="btnRoadview" onclick="toggleMap(false)" title="로드뷰 보기" value="로드뷰">
         </div>
-        <div id="rvWrapper" style="width:780px;height:600px;position:absolute;top:0;left:0;">
-            <div id="roadview" style="height:100%"></div> <!-- 로드뷰를 표시할 div 입니다 -->
+        <!--<div id="rvWrapper" style="width:780px;height:600px;position:absolute;top:0;left:0;">-->
+        <div id="rvWrapper" style="width:100%;height:100%;position:absolute;top:0;left:0;">
+            <div id="roadview" style="width:100%;height:100%"></div> <!-- 로드뷰를 표시할 div 입니다 -->
             <input type="button" id="btnMap" onclick="toggleMap(true)" title="지도 보기" value="지도">
         </div>
     </div>
+    <div class=" col-md-4 col-sm-12">
+		<div class="single-explore-item">
+			<div class="single-explore-img">
+				{% if data.imageSrc %}
+					<img src="{{data.imageSrc}}" alt="explore image" class="explore-img img-fluid">
+				{% else %}
+					<img src="https://previews.123rf.com/images/aquir/aquir1405/aquir140500246/28667314-binnenkort-rood-round-grungy-stempel-ge%C3%AFsoleerd-op-een-witte-achtergrond.jpg" alt="explore image" class="explore-img">
+				{% endif %}
+				<div class="single-explore-img-info">
+					<button onclick="window.location.href='#'">best rated</button>
+					<div class="single-explore-image-icon-box">
+						<ul>
+							<li>
+								<div class="single-explore-image-icon">
+									<i class="fa fa-arrows-alt"></i>
+								</div>
+							</li>
+							<li>
+								<div class="single-explore-image-icon">
+									<i class="fa fa-bookmark-o"></i>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="single-explore-txt bg-theme-1">
+				<h2><a href="{% url 'data:detail' data.id %}">{{data.name}}</a></h2>
+				<p class="explore-rating-price">
+					<span class="explore-rating">5.0</span>
+					<a href="#"> 10 ratings</a> 
+					<span class="explore-price-box">
+						form
+						<span class="explore-price">{{data.commonAddr}}</span>
+					</span>
+				<div class="explore-person">
+					<div class="row">
+						<div class="col-sm-2">
+							<div class="explore-person-img">
+								<!--<a href="#">-->
+								<!--	<img src="{% static '/images/explore/person.png' %}" alt="explore person">-->
+								</a>
+							</div>
+						</div>
+						<div class="col-sm-10" style="height:100px">
+							<p>{{data.desc}}</p>
+							<p>{{data.tags}}</p>
+							<p>{{data.options}}</p>
+							<p>{{data.commonAddr}} {{data.addr}}</p>
+							<p>{{data.phone}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 </div>
 
 {% if user.is_authenticated %}
@@ -33,14 +95,13 @@
 
 <!--리뷰작성-->
 <a href="{% url 'data:reviewcreate' data_id=data.id user_id=user.id %}">리뷰작성</a>
-
-
-
-
 {% endif %}
 
 
 
+
+
+<!--사용자 리뷰들 클릭-(모달)사진(여러장)|리뷰보기-->
 
 <section id="explore" class="explore">
 	<div class="container">
@@ -48,14 +109,14 @@
 	    </div>
 	    <div class="explore-content">
 			<div class="row">
+
+
+{% for review in data.review_set.all %}
+
 			    <div class=" col-md-4 col-sm-6">
 					<div class="single-explore-item">
 						<div class="single-explore-img">
-							{% if data.imageSrc %}
-								<img src="{{data.imageSrc}}" alt="explore image" class="explore-img">
-							{% else %}
-								<img src="https://previews.123rf.com/images/aquir/aquir1405/aquir140500246/28667314-binnenkort-rood-round-grungy-stempel-ge%C3%AFsoleerd-op-een-witte-achtergrond.jpg" alt="explore image" class="explore-img">
-							{% endif %}
+							<img src="/media/{{ review.image_set.first.image }}" alt="explore image" class="explore-img">
 							<div class="single-explore-img-info">
 								<button onclick="window.location.href='#'">best rated</button>
 								<div class="single-explore-image-icon-box">
@@ -77,11 +138,11 @@
 						<div class="single-explore-txt bg-theme-1">
 							<h2><a href="{% url 'data:detail' data.id %}">{{data.name}}</a></h2>
 							<p class="explore-rating-price">
-								<span class="explore-rating">5.0</span>
+								<span class="explore-rating">{{review.rate}}</span>
 								<a href="#"> 10 ratings</a> 
 								<span class="explore-price-box">
-									form
-									<span class="explore-price">{{data.commonAddr}}</span>
+									<!--form-->
+									<span class="explore-price">{{review.user}}</span>
 								</span>
 							<div class="explore-person">
 								<div class="row">
@@ -93,39 +154,101 @@
 										</div>
 									</div>
 									<div class="col-sm-10" style="height:100px">
-										<p>{{data.desc}}</p>
-										<p>{{data.tags}}</p>
-										<p>{{data.options}}</p>
+									{{review.content}}
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
+						
+							<!--<button id="myModal_{{review.id}}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal_{{review.id}}">-->
+							<!--  Launch demo modal-->
+							<!--</button>-->
+							
+							
+							<!-- Modal -->
+							<!--<div class="modal" id="myModal_{{review.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+							<!--  <div class="modal-dialog" role="document">-->
+							<!--    <div class="modal-content">-->
+							<!--      <div class="modal-header">-->
+							<!--		<img src="/media/{{ review.image_set.first.image }}" alt="explore image" class="explore-img">-->
+							<!--        <h5 class="modal-title" id="exampleModalLabel">{{review.content}}</h5>-->
+							<!--        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+							<!--          <span aria-hidden="true">&times;</span>-->
+							<!--        </button>-->
+							<!--      </div>-->
+							<!--      <div class="modal-body">-->
+							<!--      </div>-->
+							<!--      <div class="modal-footer">-->
+							<!--        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+							<!--        <button type="button" class="btn btn-primary">Save changes</button>-->
+							<!--      </div>-->
+							<!--    </div>-->
+							<!--  </div>-->
+							<!--</div>-->
+							
+								<!-- Button trigger modal -->
+									<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal_{{review.id}}">
+									  Launch demo modal
+									</button>
+									
+									<!-- Modal -->
+									<div class="modal fade" id="myModal_{{review.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									  <div class="modal-dialog">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									      <!--  <h4 class="modal-title" id="myModalLabel">Modal title</h4>-->
+									      </div>
+									      <div class="modal-body">
+									  		
+										    <div id="carousel_{{review.id}}" class="carousel slide" data-ride="carousel" data-interval="false">
+											  <!-- Indicators -->
+											  <ol class="carousel-indicators">
+											  {% for i in review.image_set.all %}
+											      {% if forloop.counter0 == 0 %}
+											      <li data-target="#carousel_{{review.id}}" data-slide-to="{{ forloop.counter0 }}" class="active"></li>
+												  {% else %}
+												  <li data-target="#carousel_{{review.id}}" data-slide-to="{{ forloop.counter0 }}"></li>
+												  {% endif %}
+											  {% endfor %}
+											  </ol>
+
+											  <!-- Wrapper for slides -->
+											  <div class="carousel-inner" role="listbox">
+											  	{% for image in review.image_set.all %}
+											  		{% if forloop.counter == 1 %}
+										  				<div class="item active">
+								  					{% else %}
+  										  				<div class="item">
+								  					{% endif %}
+											  		<img src="{{image.image.url}}">
+											 	</div>
+											  	{% endfor %}
+											  </div>
+											  <!-- Controls -->
+											  <a class="left carousel-control" href="#carousel_{{review.id}}" data-slide="prev">
+											    <span class="glyphicon glyphicon-chevron-left"></span>
+											  </a>
+											  <a class="right carousel-control" href="#carousel_{{review.id}}" data-slide="next">
+											    <span class="glyphicon glyphicon-chevron-right"></span>
+											  </a>
+											</div>
+										</div>
+								        {{review.content}}
+								      </div>
+								      <div class="modal-footer">
+								        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+								        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+								      </div>
+								    </div><!-- /.modal-content -->
+								  </div><!-- /.modal-dialog -->
+								</div><!-- /.modal -->
+							</div>
+{%endfor%}
 			</div>
 		</div>
 	</div>
 </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--사용자 리뷰들 클릭-(모달)사진(여러장)|리뷰보기-->
-
-
-
-
-
 
 
 
@@ -170,7 +293,7 @@ map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
 var roadview = new daum.maps.Roadview(rvContainer);
 
 // 로드뷰의 위치를 특정 장소를 포함하는 파노라마 ID로 설정합니다
-// 로드뷰의 파노라마 ID는 Wizard를 사용하면 쉽게 얻을수 있습니다 
+// 로드뷰의 파노라마 ID는 Wizard를 사���하면 쉽게 얻을수 있습니다 
 // 특정 위치의 좌표와 가까운 로드뷰의 panoId를 추출하여 로드뷰를 띄운다.
 var roadviewClient = new daum.maps.RoadviewClient(); //좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper객체
 roadviewClient.getNearestPanoId(placePosition, 50, function(panoId) {
@@ -209,13 +332,40 @@ function toggleMap(active) {
     if (active) {
 
         // 지도가 보이도록 지도와 로드뷰를 감싸고 있는 div의 class를 변경합니다
-        container.className = "view_map"
+        container.className = "view_map col-md-8 col-sm-12"
     } else {
 
         // 지도가 숨겨지도록 지도와 로드뷰를 감싸고 있는 div의 class를 변경합니다
-        container.className = "view_roadview"   
+        container.className = "view_roadview col-md-8 col-sm-12"   
     }
 }
+
+
+// $(document).ready(function(){
+//     $('.openPopup').on('click',function(){
+//     	alert('실행됨!!!')
+//         var dataURL = $(this).attr('a href');
+//         $('.modal-body').load(dataURL,function(){
+//             $('#myModal').modal({show:true});
+//         });
+//     }); 
+// });
+
+
+// $(document).ready(function (){  
+//   for(var i=0 ; i< m.length ; i++) {
+//     $('<div class="item"><img src="'+m[i]+'"><div class="carousel-caption"></div>   </div>').appendTo('.carousel-inner');
+//     $('<li data-target="#carousel-example-generic" data-slide-to="'+i+'"></li>').appendTo('.carousel-indicators')
+
+//   }
+//   $('.item').first().addClass('active');
+//   $('.carousel-indicators > li').first().addClass('active');
+//   $('#carousel_{{review.id}}').carousel("pause");
+// });
+
+
+
+
 </script>
 
 
