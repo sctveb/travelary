@@ -7,12 +7,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ReviewForm, ImageForm, ImageFormSet
 from django.db import transaction
 
-# Create your views here.\
+# Create your views here.
 
 class DataList(ListView):
     model = Data
     paginate_by = 30
-    
+
     # def get_queryset(self):
     #     data = Data.objects.filter(name=self.request.GET['name'])
     #     # paginator = Paginator(data, 5)
@@ -47,7 +47,7 @@ class DataList(ListView):
         else:
             list_exam = Data.objects.all()
             list_exam = list_exam.order_by('-totalReviewCount')
-            
+
         paginator = Paginator(list_exam, self.paginate_by)
         page = self.request.GET.get('page')
 
@@ -59,7 +59,7 @@ class DataList(ListView):
             file_exams = paginator.page(paginator.num_pages)
         context['list_exams'] = file_exams
         return context
-        
+
 class DataDetail(DetailView):
     model = Data
 
@@ -67,27 +67,27 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
     model = Review
     form_class = ReviewForm
     # fields = ['image', 'content', 'rate']
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['image_formset'] = ImageFormSet()
         return context
-    
+
     def form_valid(self, form):
         image_formset = ImageFormSet(self.request.POST, self.request.FILES)
-        
+
         with transaction.atomic():
             form.instance.user = self.request.user
             form.instance.data_id = self.kwargs.get('data_id')
             self.object = form.save()
-        
+
             if image_formset.is_valid():
                 image_formset.instance = self.object
                 image_formset.save()
 
         return super().form_valid(form)
-    
-    
+
+
     # def list(request):
     # # 전체 목록을 보여주는 코드
     # questions_list = Question.objects.all()

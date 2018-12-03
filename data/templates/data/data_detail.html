@@ -17,7 +17,7 @@
 
 
 <div class="container">
-	
+
 <div class="row">
 	<div id="container" class="view_map col-md-8 col-sm-12" style="height:600px;padding-right:0px;padding-left:0px;">
         <!--<div id="mapWrapper" style="width:780px;height:600px;position:relative;">-->
@@ -88,9 +88,15 @@
 		</div>
 	</div>
 <!--리뷰작성-->
+	
 {% if user.is_authenticated %}
-	<a href="{% url 'data:reviewcreate' data_id=data.id user_id=user.id %}" class="btn btn-primary btn-lg" >Review</a>
+	<a href="{% url 'data:reviewcreate' data_id=data.id user_id=user.id %}" class="btn btn-primary btn-lg" style="float:right;float:right;margin-right:30px">Review</a>
 {% endif %}
+{%if user in timetable.wish.all %}
+	<button id="wish" class="btn btn-primary btn-lg" name="{{wish.id}}" style="float:right;margin-right:30px"> <i id="heart" class="fas fa-heart"><span id="wish_count" class="badge badge-light">{{timetable.wish.count}}</span> </i> 담기</button>
+{%else%}
+	<button id="wish" class="btn btn-primary btn-lg" name="{{wish.id}}" style="float:right;float:right;margin-right:30px"> <i id="heart" class="far fa-heart"><span id="wish_count" class="badge badge-light">{{timetable.wish.count}}</span></i> 담기</button>
+{%endif%}
 
 </div>
 </div>
@@ -108,8 +114,12 @@
 				{% for review in data.review_set.all %}
 					<div class=" col-md-4 col-sm-6">
 						<div class="single-explore-item">
-							<div class="single-explore-img">
-								<img src="/media/{{ review.image_set.first.image }}" alt="explore image" class="explore-img">
+							<div class="single-explore-img" data-toggle="modal" data-target="#myModal_{{review.id}}" style="cursor:pointer;">
+								{% if review.image_set.first %}
+									<img src="/media/{{ review.image_set.first.image }}" alt="explore image" class="explore-img">
+								{% else %}
+									<img src="https://previews.123rf.com/images/aquir/aquir1405/aquir140500246/28667314-binnenkort-rood-round-grungy-stempel-ge%C3%AFsoleerd-op-een-witte-achtergrond.jpg" class="explore-img">
+								{% endif %}
 									<div class="single-explore-img-info">
 										<button onclick="window.location.href='#'">best rated
 										</button>
@@ -143,27 +153,33 @@
 										<div class="col-sm-2">
 											<div class="explore-person-img">
 												<a href="#">
-												<img src="{% static '/images/explore/person.png' %}" alt="explore person">
+												{% if review.user.user_profile.image_profile %}
+													<img src="{{review.user.user_profile.image_profile.url}}" alt="explore person" class="img-circle img-responsive">
+												{% else %}
+													<img src="{% static '/images/explore/person.png' %}" alt="explore person">
+												{% endif %}
 												</a>
 											</div>
 										</div>
 										<div class="col-sm-10" style="height:100px;overflow: hidden;">
-											{{review.content}}
+											{{review.content|truncatechars:150}}
 										</div>
 									</div>
 								</div>
 							</div>
 								<!-- Button trigger modal -->
-								<button class="btn btn-primary" data-toggle="modal" data-target="#myModal_{{review.id}}">
-									  Launch demo modal
-								</button>
+								<!--<button class="btn btn-primary" data-toggle="modal" data-target="#myModal_{{review.id}}">-->
+								<!--	  Launch demo modal-->
+								<!--</button>-->
 									<!-- Modal -->
 									<div class="modal fade bs-example-modal-lg" id="myModal_{{review.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 										<div class="modal-dialog modal-lg">
 									    	<div class="modal-content">
 									      		<div class="modal-header">
 									        		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									      				<!--  <h4 class="modal-title" id="myModalLabel">Modal title</h4>-->
+									      				  <h4 class="modal-title" id="myModalLabel">
+									      				  		<img src="{{review.user.user_profile.image_profile.url}}" alt="explore person" class="img-circle" width="40px" style="margin-right: 12px;">{{review.user}}
+									      				  </h4>
 									      		</div>
 									      		<div class="modal-body">
 										    		<div class="row">
@@ -184,15 +200,19 @@
 
 																	  <!-- Wrapper for slides -->
 																	  	<div class="carousel-inner" role="listbox">
-																	  		{% for image in review.image_set.all %}
-																	  			{% if forloop.counter == 1 %}
-																  					<div class="item active">
-														  						{% else %}
-							  									  						<div class="item">
-														  						{% endif %}
-																	  		<img src="{{image.image.url}}">
-																	 					</div>
-																	  		{% endfor %}
+																	  		{% if review.image_set.first.image %}
+																		  		{% for image in review.image_set.all %}
+																		  			{% if forloop.counter == 1 %}
+																	  					<div class="item active">
+															  						{% else %}
+								  									  						<div class="item">
+															  						{% endif %}
+																		  		<img src="{{image.image.url}}">
+																		 					</div>
+																		  		{% endfor %}
+																		  	{% else %}
+																		  		<img src="https://previews.123rf.com/images/aquir/aquir1405/aquir140500246/28667314-binnenkort-rood-round-grungy-stempel-ge%C3%AFsoleerd-op-een-witte-achtergrond.jpg">
+																		  	{% endif %}	
 																	  				</div>
 																		  <!-- Controls -->
 																		  	<a class="left carousel-control" href="#carousel_{{review.id}}" data-slide="prev">
@@ -205,7 +225,7 @@
 																		
 																	</div>
 								          							<div class="col-8 col-sm-4">
-								        								{{review.content}}
+								        								{{review.content|linebreaks }}
 				                  									</div>
 																</div>
 															</div>
@@ -344,7 +364,33 @@ function toggleMap(active) {
 
 </script>
 
-
+<script type="text/javascript">
+      $('#wish').click(function(){
+        var pk = $(this).attr('name')
+        $.ajax({
+          type: "POST",
+          url: "{% url 'timetable:wish' data.id %}",
+          data: {'pk':pk, 'csrfmiddlewaretoken':'{{csrf_token}}'},
+          dataType: 'json',
+          
+          success: function(data_wish){
+            $('#wish_count').text(data_wish.wishes_count)
+            
+            if(   $('#heart').hasClass('fas')    ){
+              $('#heart').removeClass('fas').addClass('far')
+            }
+            else{
+              $('#heart').removeClass('far').addClass('fas')
+            }
+          },
+          error: function(){
+            
+          }
+          
+        })
+      })
+      
+    </script>
 
 
 
