@@ -44,7 +44,7 @@
 
 
 
-<section id="explore" class="explore">
+<section id="explore" class="explore" style="padding:0">
 	<div class="container">
 		<div class="section-header">
 	    </div>
@@ -53,7 +53,7 @@
 
 {%for data in list_exams%}
 
-					<div class=" col-md-4 col-sm-6">
+					<div class="col-md-4 col-sm-6">
 						<div class="single-explore-item">
 							<div class="single-explore-img">
 								{% if data.imageSrc %}
@@ -62,7 +62,7 @@
 									<img src="https://previews.123rf.com/images/aquir/aquir1405/aquir140500246/28667314-binnenkort-rood-round-grungy-stempel-ge%C3%AFsoleerd-op-een-witte-achtergrond.jpg" alt="explore image" class="explore-img">
 								{% endif %}
 								<div class="single-explore-img-info">
-									<button onclick="window.location.href='#'">best rated</button>
+									<button>best rated</button>
 									<div class="single-explore-image-icon-box">
 										<ul>
 											<li>

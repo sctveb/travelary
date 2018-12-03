@@ -21,7 +21,7 @@ class DataList(ListView):
     #     return data
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs) 
+        context = super().get_context_data(**kwargs)
         # list_exam = Data.objects.all()
 
         if self.request.GET.get('name', False):
@@ -87,6 +87,32 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
 
         return super().form_valid(form)
 
+class ReviewList(ListView):
+    model = Review
+    paginate_by = 30
+    
+    def list(request):
+        # 전체 목록을 보여주는 코드
+        review_list = Review.objects.all()
+        paginator = Paginator(review_list, 5)
+        page = request.GET.get('page')
+        
+        try:
+            file_exams = paginator.page(page)
+        except PageNotAnInteger:
+            file_exams = paginator.page(1)
+        except EmptyPage:
+            file_exams = paginator.page(paginator.num_pages)
+        context['review_list'] = file_exams
+        return context
+        
+
+
+
+
+
+
+
 
     # def list(request):
     # # 전체 목록을 보여주는 코드
@@ -95,12 +121,6 @@ class ReviewCreate(LoginRequiredMixin, CreateView):
     # page = request.GET.get('page')
     # questions = paginator.get_page(page)
     # return render(request,'question/list.html',{'questions':questions})
-    
-    
-    
-    
-    
-    
     
     
     # def get_context_data(self,**kwargs):
