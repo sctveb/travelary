@@ -75,7 +75,7 @@
 								</a>
 							</div>
 						</div>
-						<div class="col-sm-10" style="height:100px">
+						<div class="col-sm-10" style="height:100px;overflow: hidden;">
 							<p>{{data.desc}}</p>
 							<p>{{data.tags}}</p>
 							<p>{{data.options}}</p>
@@ -89,7 +89,7 @@
 	</div>
 <!--리뷰작성-->
 {% if user.is_authenticated %}
-	<a class="btn btn-primary btn-lg" href="{% url 'data:reviewcreate' data_id=data.id user_id=user.id %}" role="button">리뷰작성</a>
+	<a href="{% url 'data:reviewcreate' data_id=data.id user_id=user.id %}" class="btn btn-primary btn-lg" >Review</a>
 {% endif %}
 
 </div>
@@ -147,7 +147,7 @@
 												</a>
 											</div>
 										</div>
-										<div class="col-sm-10" style="height:100px">
+										<div class="col-sm-10" style="height:100px;overflow: hidden;">
 											{{review.content}}
 										</div>
 									</div>

@@ -16,7 +16,7 @@ class Data(models.Model):
     microReview = models.CharField(max_length=100)
     tags = models.CharField(max_length=100)
     options = models.CharField(max_length=100)
-    totalReviewCount = models.CharField(max_length=100)
+    totalReviewCount = models.IntegerField()
     roadAddr = models.CharField(max_length=100)
     commonAddr = models.CharField(max_length=100)
     addr = models.CharField(max_length=100)
