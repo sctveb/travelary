@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView, ListView
 from data.models import Data
 from .models import User_Profile
+from data.models import Review
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -41,6 +42,9 @@ class ProfileList(LoginRequiredMixin,ListView):
             context['user_profile'] = self.request.user.user_profile
         except User_Profile.DoesNotExist:
             pass
+        
+        context['review_list'] = Review.objects.filter(user=self.request.user)
+        
         return context
 
 
