@@ -14,7 +14,7 @@ class User_Profile(models.Model):
                 format='JPEG',                           
                 options={'quality':90},                 
                 blank=True,null=True)
-    
+    content = models.TextField(blank=True,null=True)
     age = models.IntegerField(default=1,validators=[MaxValueValidator(100),MinValueValidator(1)],blank=True,null=True)
     gender_choice = [['M','남성'],['F','여성']]
     gender = models.CharField(max_length=1,choices=gender_choice,blank=True,null=True)

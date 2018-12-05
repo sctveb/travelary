@@ -33,10 +33,13 @@ class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     content = models.TextField()
     rate = models.FloatField()
+    created_at = models.DateTimeField(auto_now=True)
     
     def get_absolute_url(self):
         return reverse('data:detail', kwargs={'pk': self.data_id})
     
+    class Meta:
+        ordering = ['-created_at']
 
 class Image(models.Model):
     review = models.ForeignKey(Review, on_delete=models.CASCADE)

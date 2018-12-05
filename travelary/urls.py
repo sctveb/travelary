@@ -28,6 +28,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('data/',include('data.urls')),
     path('user_profile/',include('user_profile.urls')),
+    path('timetable/',include('timetable.urls')),
     
 ]
 
